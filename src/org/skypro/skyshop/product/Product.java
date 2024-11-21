@@ -1,23 +1,24 @@
 package org.skypro.skyshop.product;
 
-public class Product {
+public abstract class Product {
     private String productName;
-    private int productCost;
 
-    public Product(String productName, int productCost) {
+
+    public Product(String productName) {
         this.productName = productName;
-        this.productCost = productCost;
     }
 
     public String getProductName() {
         return productName;
     }
 
-    public int getProductCost() {
-        return productCost;
+    public abstract int getProductCost();
+
+    public String toString() {
+        return getProductName() + ": " + getProductCost();
     }
 
-    public String getProduct() {
-        return "Название товара = " + productName + "Цена = " + productCost;
+    public boolean isSpecial() {
+        return false; // По умолчанию товар не  специальный
     }
 }
