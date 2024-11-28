@@ -17,8 +17,8 @@ public class FixPriceProduct extends Product {
             return getProductName() + ": Фиксированная цена " + FIXED_PRICE;
         }
 
-        @Override
-        public boolean isSpecial() {
+    @Override
+    public boolean isSpecial() {
         return true; // Товар с фиксированной ценой  является специальным
     }
 }
