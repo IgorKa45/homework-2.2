@@ -31,7 +31,7 @@ public class Article implements Searchable {
 
     @Override
     public String getContentType() {
-        return "Статья";
+        return "ARTICLE";
     }
 
     @Override

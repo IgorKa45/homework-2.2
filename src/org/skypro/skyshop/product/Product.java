@@ -31,7 +31,7 @@ public abstract class Product implements Searchable {
 
     @Override
     public String getContentType() {
-        return "Продукт";
+        return "PRODUCT";
     }
 
     @Override
