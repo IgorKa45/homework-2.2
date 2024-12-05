@@ -34,14 +34,20 @@ public class ProductBasket {
     public void getBasketContent() {
         if (productCount == 0) {
             System.out.println("Корзина пуста");
-        } else {
+        }
+        int specialProductCount = 0;
+        if (productCount != 0) {
             System.out.println("Список товаров:");
             for (Product product : products) {
                 if (product != null) {
-                    System.out.println(product.getProductName() + ": " + product.getProductCost());
+                    System.out.println(product);
+                    if (product.isSpecial()) {
+                        specialProductCount++;
+                    }
                 }
             }
-            System.out.println("Итого:" + getTotalPrice());
+            System.out.println("Итого: " + getTotalPrice());
+            System.out.println("Специальных товаров: " + specialProductCount);
         }
     }
 
