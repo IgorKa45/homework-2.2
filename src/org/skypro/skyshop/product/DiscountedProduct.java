@@ -6,6 +6,9 @@ public class DiscountedProduct extends Product {
 
     public DiscountedProduct(String productName, int basedCost, int discountPercent) {
         super(productName); // Конструктор суперкласса
+        if ((discountPercent < 0) || (discountPercent > 100)) {
+            throw new IllegalArgumentException("Поле скидка может принимать значения в диапазоне от 0 до 100");
+        }
         this.basedCost = basedCost;
         this.discountPercent = discountPercent;
     }

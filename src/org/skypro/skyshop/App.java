@@ -6,13 +6,37 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
+
 
 public class App {
     public static void main(String[] args) {
 
-        // Создаём объект SearchEngine
+        System.out.println("Некорреектное имя: null");
+        try {
+            SimpleProduct product7 = new SimpleProduct(null, 394);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        System.out.println();
+        System.out.println("Некорректная цена");
+        try {
+            SimpleProduct product8 = new SimpleProduct("Клей2", -25);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        System.out.println();
+        System.out.println("Некорректный процент");
+        try {
+            DiscountedProduct product9 = new DiscountedProduct("Клей3", 45, 116);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+
+        // Создаём объект SearchEngine с вместимостью 10 элементов
         SearchEngine searchEngine = new SearchEngine(10);
 
         // Добавляем товары
@@ -28,6 +52,31 @@ public class App {
         searchEngine.add(new Article("Советы по экономии", "Научитесь выбирать товары со скидкой."));
         searchEngine.add(new Article("История канцелярских принадлежностей", "Ручки и ластики имеют длинную и увлекательную историю."));
 
+
+        //Метод findMostRelevant
+        System.out.println("\nПоиск наиболее релевантных запросов:");
+        try {
+            // Успешный поиск
+            String query1 = "ручка";
+            System.out.println("\nИщем наиболее подходящий элемент для запроса: " + query1);
+            Searchable result1 = searchEngine.findMostRelevant(query1);
+            System.out.println("Наиболее подходящий элемент:");
+            System.out.println(result1);
+        } catch (SearchEngine.BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            // Поиск, который вызовет исключение
+            String query2 = "error";
+            System.out.println("\nИщем наиболее подходящий элемент для запроса: " + query2);
+            Searchable result2 = searchEngine.findMostRelevant(query2);
+            System.out.println("Наиболее подходящий элемент:");
+            System.out.println(result2);
+        } catch (SearchEngine.BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        System.out.println();
         // Выполняем поиск и выводим результаты
         System.out.println("Поиск по запросу 'Ручка':");
         System.out.println(Arrays.toString(searchEngine.search("Ручка")));
