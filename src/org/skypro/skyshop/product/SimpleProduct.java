@@ -6,6 +6,9 @@ public class SimpleProduct extends Product {
 
     public SimpleProduct(String productName, int productCost) {
         super(productName); // Конструктор суперкласса
+        if (productCost <= 0) {
+            throw new IllegalArgumentException("Поле цена может принимать значения только больше нуля");
+        }
         this.productCost = productCost;
     }
 
