@@ -1,36 +1,29 @@
 package org.skypro.skyshop.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchEngine {
-    private final Searchable[] searchables; // Массив всех элементов для поиска
-    private int itemCount; // Количество добавленных элементов
+    private final List<Searchable> searchables; // Массив всех элементов для поиска
+
 
     public SearchEngine(int size) {
-        searchables = new Searchable[size];
-        itemCount = 0;
+        searchables = new ArrayList<>(size);
     }
 
     public void add(Searchable item) {
-        if (itemCount < searchables.length) {
-            searchables[itemCount++] = item;
-        } else {
-            System.out.println("Невозможно добавить элемент: массив заполнен.");
-        }
+        searchables.add(item);
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int resultCount = 0;
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.getSearchTerm().toLowerCase().contains(query.toLowerCase())) {
-                results[resultCount++] = searchable;
-                if (resultCount == 5) {
-                    break;
-                }
+                results.add(searchable);
             }
         }
         return results;
     }
-
     public Searchable findMostRelevant(String search) throws BestResultNotFound {
         if (search == null || search.isBlank()) {
             throw new IllegalArgumentException("Поисковая строка не может быть пустой или null");
@@ -68,7 +61,6 @@ public class SearchEngine {
         }
         return mostRelevant;
     }
-
     public class BestResultNotFound extends Exception {
         public BestResultNotFound() {
             super();
@@ -78,5 +70,7 @@ public class SearchEngine {
             super(message);
         }
     }
-
 }
+
+
+
