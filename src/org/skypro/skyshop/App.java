@@ -4,11 +4,12 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.Arrays;
+import java.util.List;
 
 
 public class App {
@@ -53,7 +54,7 @@ public class App {
         searchEngine.add(new Article("История канцелярских принадлежностей", "Ручки и ластики имеют длинную и увлекательную историю."));
 
 
-        //Метод findMostRelevant
+        // Демонстрация метода findMostRelevant
         System.out.println("\nПоиск наиболее релевантных запросов:");
         try {
             // Успешный поиск
@@ -79,15 +80,23 @@ public class App {
         System.out.println();
         // Выполняем поиск и выводим результаты
         System.out.println("Поиск по запросу 'Ручка':");
-        System.out.println(Arrays.toString(searchEngine.search("Ручка")));
+        List<Searchable> results1 = searchEngine.search("Ручка");
+        for (Searchable result : results1) {
+            System.out.println(result);
+        }
 
         System.out.println("\nПоиск по запросу 'ластик':");
-        System.out.println(Arrays.toString(searchEngine.search("ластик")));
+        List<Searchable> results2 = searchEngine.search("ластик");
+        for (Searchable result : results2) {
+            System.out.println(result);
+        }
 
         System.out.println("\nПоиск по запросу 'AAAAA':");
-        System.out.println(Arrays.toString(searchEngine.search("AAAAA")));
+        List<Searchable> results3 = searchEngine.search("AAAAA");
+        for (Searchable result : results3) {
+            System.out.println(result);
+        }
 
-        System.out.println();
         ProductBasket basket = new ProductBasket();
         FixPriceProduct product1 = new FixPriceProduct("Ручка");
         DiscountedProduct product2 = new DiscountedProduct("Клей", 120, 25);
@@ -96,7 +105,7 @@ public class App {
         FixPriceProduct product5 = new FixPriceProduct("Скобы для степлера");
         SimpleProduct product6 = new SimpleProduct("Ластик", 221);
 
-        System.out.println("Пустая корзина:");
+        System.out.println("\nПустая корзина:");
         basket.getBasketContent();
 
         basket.addProduct(product1);
@@ -105,36 +114,46 @@ public class App {
         basket.addProduct(product4);
         basket.addProduct(product5);
 
-        System.out.println();
-        System.out.println("Корзина с товарами");
+        System.out.println("\nКорзина с товарами:");
         basket.getBasketContent();
 
-        System.out.println();
-        System.out.println("Переполненная корзина:");
-        basket.addProduct(product6);
 
-        System.out.println();
-        System.out.println("Поиск товара, который есть в корзине:");
+        System.out.println("\nПоиск товара, который есть в корзине:");
         System.out.println(basket.getProductCheck("Клей"));
 
-        System.out.println();
-        System.out.println("Поиск товара, которого нет в корзине:");
+        System.out.println("\nПоиск товара, которого нет в корзине:");
         System.out.println(basket.getProductCheck("Ластик"));
 
+        // Удаление существующего продукта и содержимое после его удаления
+        System.out.println("\nУдаление продукта 'Клей':");
+        List<Product> removedProducts = basket.removeProductName("Клей");
+        System.out.println("Удаленные продукты:");
+        for (Product product : removedProducts) {
+            System.out.println(product);
+        }
         System.out.println();
-        System.out.println("Очистка корзины:");
-        basket.clearBasket();
-
-        System.out.println();
-        System.out.println("Печать содержимого пустой корзины:");
         basket.getBasketContent();
 
-        System.out.println();
-        System.out.println("Получение стоимости пустой корзины:");
+        // Удаление несуществующего продукта и проверка корзины
+        System.out.println("\nУдаление несуществующего продукта 'Ластик':");
+        List<Product> removedProducts2 = basket.removeProductName("Ластик");
+        if (removedProducts2.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+
+        System.out.println("\nСодержимое корзины после удаления несуществующего продукта:");
+        basket.getBasketContent();
+
+        System.out.println("\nОчистка корзины:");
+        basket.clearBasket();
+
+        System.out.println("\nПечать содержимого пустой корзины:");
+        basket.getBasketContent();
+
+        System.out.println("\nПолучение стоимости пустой корзины:");
         System.out.println(basket.getTotalPrice());
 
-        System.out.println();
-        System.out.println("Поиск товара по имени в пустой корзине:");
+        System.out.println("\nПоиск товара по имени в пустой корзине:");
         System.out.println(basket.getProductCheck("Клей"));
 
     }
