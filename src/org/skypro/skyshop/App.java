@@ -90,8 +90,8 @@ public class App {
         for (Map.Entry<String, Searchable> entry : results2.entrySet()) {
             System.out.println(entry.getValue());
         }
-        System.out.println("\nПоиск по запросу 'AAAAA':");
-        Map<String, Searchable> results3 = searchEngine.search("AAAAA");
+        System.out.println("\nПоиск по запросу 'AAAAAA':");
+        Map<String, Searchable> results3 = searchEngine.search("AAAAAA");
         for (Map.Entry<String, Searchable> entry : results3.entrySet()) {
             System.out.println(entry.getValue());
         }
