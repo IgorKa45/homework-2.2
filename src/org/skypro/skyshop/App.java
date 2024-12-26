@@ -10,7 +10,7 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 
 public class App {
@@ -81,19 +81,19 @@ public class App {
         System.out.println();
         // Выполняем поиск и выводим результаты
         System.out.println("Поиск по запросу 'Ручка':");
-        Map<String, Searchable> results1 = searchEngine.search("Ручка");
-        for (Map.Entry<String, Searchable> entry : results1.entrySet()) {
-            System.out.println(entry.getValue());
+        Set<Searchable> results1 = searchEngine.search("Ручка");
+        for (Searchable result : results1) {
+            System.out.println(result);
         }
         System.out.println("\nПоиск по запросу 'ластик':");
-        Map<String, Searchable> results2 = searchEngine.search("ластик");
-        for (Map.Entry<String, Searchable> entry : results2.entrySet()) {
-            System.out.println(entry.getValue());
+        Set<Searchable> results2 = searchEngine.search("ластик");
+        for (Searchable result : results2) {
+            System.out.println(result);
         }
-        System.out.println("\nПоиск по запросу 'AAAAAA':");
-        Map<String, Searchable> results3 = searchEngine.search("AAAAAA");
-        for (Map.Entry<String, Searchable> entry : results3.entrySet()) {
-            System.out.println(entry.getValue());
+        System.out.println("\nПоиск по запросу 'AAAAA':");
+        Set<Searchable> results3 = searchEngine.search("AAAAA");
+        for (Searchable result : results3) {
+            System.out.println(result);
         }
 
         ProductBasket basket = new ProductBasket();
