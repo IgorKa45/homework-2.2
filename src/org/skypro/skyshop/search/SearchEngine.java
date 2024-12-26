@@ -1,31 +1,31 @@
 package org.skypro.skyshop.search;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class SearchEngine {
-    private final List<Searchable> searchables; // Массив всех элементов для поиска
+    private final Set<Searchable> searchables; // Массив всех элементов для поиска
 
 
     public SearchEngine(int size) {
-        searchables = new ArrayList<>(size);
+        searchables = new HashSet<>(size);
     }
 
     public void add(Searchable item) {
         searchables.add(item);
     }
 
-    public Map<String,Searchable> search(String query) {
-        Map<String,Searchable> results = new TreeMap<>();
+    public Set<Searchable> search(String query) {
+        Set<Searchable> results = new TreeSet<>(new SearchableComparator());
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.getSearchTerm().toLowerCase().contains(query.toLowerCase())) {
-                results.put(searchable.getName(), searchable);
+                results.add(searchable);
             }
         }
         return results;
     }
+
     public Searchable findMostRelevant(String search) throws BestResultNotFound {
         if (search == null || search.isBlank()) {
             throw new IllegalArgumentException("Поисковая строка не может быть пустой или null");
@@ -63,6 +63,7 @@ public class SearchEngine {
         }
         return mostRelevant;
     }
+
     public class BestResultNotFound extends Exception {
         public BestResultNotFound() {
             super();
