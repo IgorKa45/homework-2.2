@@ -2,10 +2,7 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProductBasket {
     private final Map<String, List<Product>> products;
@@ -25,14 +22,17 @@ public class ProductBasket {
 
     //Расчёт стоимости корзины
     public int getTotalPrice() {
-        int total = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                total += product.getProductCost();
-            }
-        }
-
-        return total;
+        return products.values().stream()
+                .flatMap(List::stream)
+                .mapToInt(Product::getProductCost)
+                .sum();
+    }
+    // Метод для подсчета количества специальных продуктов
+    private long getSpecialCount() {
+        return products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public void getBasketContent() {
@@ -40,19 +40,11 @@ public class ProductBasket {
             System.out.println("Корзина пуста");
         } else {
             System.out.println("Список товаров:");
-            int specialProductCount = 0;
-            for (List<Product> productList: products.values()) {
-                for (Product product : productList) {
-                    if (product != null) {
-                        System.out.println(product);
-                        if (product.isSpecial()) {
-                            specialProductCount++;
-                        }
-                    }
-                }
-            }
+            products.values().stream()
+                    .flatMap(List::stream) 
+                    .forEach(System.out::println);
             System.out.println("Итого: " + getTotalPrice());
-            System.out.println("Специальных товаров: " + specialProductCount);
+            System.out.println("Специальных товаров: " + getSpecialCount());
         }
     }
 
